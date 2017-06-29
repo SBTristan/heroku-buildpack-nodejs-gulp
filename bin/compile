@@ -201,11 +201,22 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
 (
   if [ -f $build_dir/gulpfile.js ]; then
     # get the env vars
+    if [ -d "$env_dir" ]; then
+      status "Exporting config vars to environment"
+      export_env_dir $env_dir
+    fi
 
     # Install gulp locally
+    status "Updating/Installing gulp locally"
+    npm update gulp | indent
     
-    echo "-----> Found gulpfile, running gulp heroku:$NODE_ENV task"
-    node_modules/.bin/gulp heroku:$NODE_ENV
+    if [ "$GULP_BUILD_TASK" != "" ]; then
+      echo "-----> Found gulpfile, running `gulp $GULP_BUILD_TASK --env=$NODE_ENV`"
+      node_modules/.bin/gulp $GULP_BUILD_TASK --env=$NODE_ENV
+    else
+      echo "-----> Found gulpfile, running `gulp heroku:$NODE_ENV`"
+      node_modules/.bin/gulp heroku:$NODE_ENV
+     fi
   else
     echo "-----> No gulpfile found"
   fi
