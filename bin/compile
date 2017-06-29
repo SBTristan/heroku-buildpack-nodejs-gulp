@@ -211,10 +211,10 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
     npm update gulp | indent
     
     if [ "$GULP_BUILD_TASK" != "" ]; then
-      echo "-----> Found gulpfile, running `gulp $GULP_BUILD_TASK --env=$NODE_ENV`"
+      echo "-----> Found gulpfile, running gulp $GULP_BUILD_TASK with --env=$NODE_ENV"
       node_modules/.bin/gulp $GULP_BUILD_TASK --env=$NODE_ENV
     else
-      echo "-----> Found gulpfile, running `gulp heroku:$NODE_ENV`"
+      echo "-----> Found gulpfile, running gulp heroku:$NODE_ENV"
       node_modules/.bin/gulp heroku:$NODE_ENV
      fi
   else
